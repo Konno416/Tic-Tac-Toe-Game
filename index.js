@@ -4,7 +4,7 @@ var tie = 0;
 var turn = 1;
 var plTurn = 1;
 
-function checkWin(){
+function checkWinX(){
     if($(".row-1 .box.X").length === 3 
     || $(".row-2 .box.X").length === 3 
     || $(".row-3 .box.X").length === 3
@@ -17,51 +17,85 @@ function checkWin(){
     || $("#3").hasClass("X")
     &&$("#5").hasClass("X")
     &&$("#7").hasClass("X")){
-        p1Score = p1Score + 1;
-        $("#p1-score").text(p1Score);
-        console.log("Working");
+        return true
     }
-    else if($(".row-1 .box.O").length === 3 
+}
+
+
+function checkWinO(){
+    if($(".row-1 .box.O").length === 3 
     || $(".row-2 .box.O").length === 3 
     || $(".row-3 .box.O").length === 3
     || $(".col-1.O").length === 3
     || $(".col-2.O").length === 3
     || $(".col-3.O").length === 3
     || $("#1").hasClass("O")
-    &&$("#5").hasClass("O")
-    &&$("#9").hasClass("O")
+        &&$("#5").hasClass("O")
+        &&$("#9").hasClass("O")
     || $("#3").hasClass("O")
-    &&$("#5").hasClass("O")
-    &&$("#7").hasClass("O")){
-        p2Score = p2Score + 1;
-        $("#p2-score").text(p2Score);
-        console.log("Working")
-    }
-    else if(turn === 10){
-        tie = tie + 1;
-        $("#tie").text(tie);
+        &&$("#5").hasClass("O")
+        &&$("#7").hasClass("O")){
+            return true
     }
 }
 
+function checkTie(){
+    if(checkWinX()===false && checkWinO===false && turn === 10){
+        return true
+    }
+}
+
+function clearBoard(){
+    $(".X").empty();
+    $(".X").removeClass("X");
+    $(".O").empty();
+    $(".O").removeClass("O");
+    turn = 1;
+}
 
 
 $(".box").click(function(){
     if(turn % 2 === 1 ){
         $(this).text("X");
         $(this).addClass("X");
-        turn = turn + 1;
+        turn++;
         $("#turn").text(turn);
         plTurn = 2;
         $("#pl-turn").text(2);
-        checkWin();
+        if(checkWinX()){
+            p1Score++;
+            $("#p1-score").text(p1Score);
+            clearBoard();
+        }
+        else if(checkWinO()){
+            p2Score++;
+            $("#p2-score").text(p2Score);
+            clearBoard();
+        }
+        else if(checkTie()){
+            tie++;
+            $("#tie").text(tie);
+            clearBoard();
+        }
     }
     else {
         $(this).text("O");
         $(this).addClass("O");
-        turn = turn + 1;
+        turn++;
         $("#turn").text(turn);
         plTurn = 1
         $("#pl-turn").text(1);
-        checkWin();
+        if(checkWinX()){
+            p1Score++;
+            $("#p1-score").text(p1Score);
+        }
+        else if(checkWinO()){
+            p2Score++;
+            $("#p2-score").text(p2Score);
+        }
+        else if(checkTie()){
+            tie++;
+            $("#tie").text(tie);
+        }
     }
 });
