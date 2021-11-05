@@ -40,8 +40,10 @@ function checkWinO(){
 }
 
 function checkTie(){
-    if(checkWinX()===false && checkWinO===false && turn === 10){
-        return true
+    if($(".X").length + $(".O").length === 9){
+        tie++
+        $("#tie").text(tie)
+        clearBoard()
     }
 }
 
@@ -72,11 +74,7 @@ $(".box").click(function(){
             $("#p2-score").text(p2Score);
             clearBoard();
         }
-        else if(checkTie()){
-            tie++;
-            $("#tie").text(tie);
-            clearBoard();
-        }
+        else {checkTie()}
     }
     else {
         $(this).text("O");
@@ -93,9 +91,6 @@ $(".box").click(function(){
             p2Score++;
             $("#p2-score").text(p2Score);
         }
-        else if(checkTie()){
-            tie++;
-            $("#tie").text(tie);
-        }
+        else {checkTie()}
     }
 });
