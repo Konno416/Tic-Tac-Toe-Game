@@ -3,6 +3,7 @@ var p2Score = 0;
 var tie = 0;
 var turn = 1;
 var plTurn = 1;
+var what = 1;
 
 function checkWinX(){
     if($(".row-1 .box.X").length === 3 
@@ -41,9 +42,9 @@ function checkWinO(){
 
 function checkTie(){
     if($(".X").length + $(".O").length === 9){
-        tie++
-        $("#tie").text(tie)
-        clearBoard()
+        tie++;
+        $("#tie").text(tie);
+        clearBoard();
     }
 }
 
@@ -86,11 +87,13 @@ $(".box").click(function(){
         if(checkWinX()){
             p1Score++;
             $("#p1-score").text(p1Score);
+            clearBoard();
         }
         else if(checkWinO()){
             p2Score++;
             $("#p2-score").text(p2Score);
+            clearBoard();
         }
-        else {checkTie()}
+        else {checkTie()};
     }
 });
